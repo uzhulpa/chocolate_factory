@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ChocolateFactory.Pages.MainPage"
+             xmlns:vm="clr-namespace:ChocolateFactory.ViewModels"
+             xmlns:data="clr-namespace:ChocolateFactory.Data"
+             xmlns:models="clr-namespace:ChocolateFactory.Models"
+             Shell.NavBarIsVisible="False"
+             x:DataType="vm:HomeViewModel">
+
+    <Grid ColumnDefinitions=".50*, .50*"
+          BackgroundColor="White">
+        <Grid Grid.Column="0"
+              RowDefinitions="Auto, *"
+              Padding="10,10">
+            <Label Grid.Row="0"
+                   Text="Кондитерские изделия"
+                   TextColor="Black"
+                   BackgroundColor="{StaticResource White}"
+                   FontSize="Title"
+                   Padding="5,10"
+                   FontAttributes="Bold"/>
+            <Grid Grid.Row="1">
+                <!--    CollectionView для Items    -->
+                <CollectionView x:Name="ItemsCollectionView"
+                                ItemsSource="{Binding Items}"
+                                BackgroundColor="White">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="3" HorizontalItemSpacing="5" VerticalItemSpacing="5"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="data:Item">
+                            <Border StrokeShape="RoundRectangle 10"
+                                    Margin="10"
+                                    Padding="10"
+                                    StrokeThickness="0.5"
+                                    Stroke="LightGray"
+                                    >
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Верхние элементы -->
+                                    <VerticalStackLayout Grid.Row="0" Spacing="5">
+                                        <!-- Картинка -->
+                                        <Image Source="{Binding ImagePath}"
+                                               HeightRequest="130"
+                                               WidthRequest="130"
+                                               BackgroundColor="White"
+                                               Aspect="AspectFit"
+                                               HorizontalOptions="Center"/>
+
+                                        <!-- Цена и вес -->
+                                        <FlexLayout JustifyContent="SpaceBetween">
+                                            <HorizontalStackLayout HorizontalOptions="Start" Spacing="5">
+                                                <Label Text="{Binding Price}"
+                                                       TextColor="Black"
+                                                       FontSize="18"
+                                                       FontAttributes="Bold"/>
+                                                <Label Text="руб./шт"
+                                                       TextColor="Gray"
+                                                       VerticalTextAlignment="Center"/>
+                                            </HorizontalStackLayout>
+                                            <Label Text="{Binding Weight, StringFormat='{0} г'}"
+                                                   TextColor="Gray"
+                                                   VerticalOptions="Center"/>
+                                        </FlexLayout>
+
+                                        <!-- Название -->
+                                        <Label Text="{Binding Name}"
+                                               TextColor="Black"
+                                               LineBreakMode="WordWrap"
+                                               MaxLines="3"
+                                               VerticalOptions="Start"/>
+                                        <Label FontSize="Micro"/>
+                                    </VerticalStackLayout>
+                                    <Button Grid.Row="2"
+                                            HeightRequest="35"
+                                            Text="Добавить"
+                                            Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=AddToGiftCommand}"
+                                            CommandParameter="{Binding .}"
+                                            BackgroundColor="LightBlue"/>
+                                    <!-- Кнопка -->
+                                    <!--<ImageButton Grid.Row="2" Source="plus.png"
+                                                 HeightRequest="20"
+                                                 WidthRequest="20"
+                                                 Aspect="AspectFit"
+                                                 HorizontalOptions="Center"
+                                                 VerticalOptions="End"
+                                                 Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=AddToGiftCommand}"
+                                                 CommandParameter="{Binding .}"/>-->
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <BoxView IsVisible="{Binding IsLoading}"
+                         HorizontalOptions="Fill"
+                         VerticalOptions="Fill"
+                         Opacity="0.5"/>
+                <ActivityIndicator IsRunning="{Binding IsLoading}"
+                                   HeightRequest="25"
+                                   WidthRequest="25"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   Color="DarkBlue"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="1" BackgroundColor="{StaticResource LightGrey}"
+              RowDefinitions="Auto, *, Auto" Padding="10">
+            <VerticalStackLayout>
+                <Grid ColumnDefinitions="Auto, Auto"
+                      RowDefinitions="Auto, Auto"
+                      BackgroundColor="White">
+                    <Grid Grid.Row="0">
+                        <Grid Grid.Column="0">
+                            <Label Text="Название"
+                                   TextColor="Black"/>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <Entry ClearButtonVisibility="WhileEditing"
+                                   Placeholder="Название подарка"
+                                   PlaceholderColor="Gray"
+                                   TextColor="Black"
+                                   MaxLength="30"/>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid Grid.Column="0">
+                            <Label Text="Картинк"
+                                   TextColor="Black"/>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <Entry ClearButtonVisibility="WhileEditing"
+                                   Placeholder="Карт"
+                                   PlaceholderColor="Gray"
+                                   TextColor="Black"
+                                   MaxLength="30"/>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Label Grid.Row="0" Text="Состав набора"
+                   FontSize="Title"
+                   FontAttributes="Bold"
+                   TextColor="Black"
+                   Margin="5"/>
+            </VerticalStackLayout>
+            
+            <CollectionView Grid.Row="1"
+                            ItemsSource="{Binding GiftItems}"
+                            BackgroundColor="White">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="1"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:GiftItemModel">
+                        <Grid>
+                            <Border Padding="5"
+                                    Margin="5"
+                                    StrokeShape="RoundRectangle 10"
+                                    BackgroundColor="White"
+                                    Stroke="LightGray"
+                                    StrokeThickness="0.5"
+                                    MinimumWidthRequest="200">
+                                <!--сделать через grid-->
+                                <Grid ColumnDefinitions="Auto, *, Auto, Auto, Auto">
+                                    <Grid Grid.Column="0">
+                                        <Image Source="{Binding ImagePath}"
+                                               WidthRequest="70"
+                                               HeightRequest="70"
+                                               Margin="5"/>
+                                    </Grid>
+                                    <Grid Grid.Column="1">
+                                        <VerticalStackLayout Margin="5" VerticalOptions="Start">
+                                            <Label Text="{Binding Name}"
+                                                   TextColor="Black"
+                                                   FontSize="15"/>
+                                            <HorizontalStackLayout VerticalOptions="Center">
+                                                <Label Text="{Binding Calories}"
+                                                       TextColor="Gray"/>
+                                                <Label Text=" ккал"
+                                                       TextColor="Gray"/>
+                                            </HorizontalStackLayout>
+                                            <HorizontalStackLayout>
+
+                                            </HorizontalStackLayout>
+                                        </VerticalStackLayout>
+
+                                    </Grid>
+                                    <Grid Grid.Column="2">
+                                        <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Margin="5">
+                                            <Button Text="-"
+                                                    BackgroundColor="LightBlue"
+                                                    WidthRequest="40"
+                                                    HeightRequest="30"
+                                                    HorizontalOptions="Start"
+                                                    Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=DecreaseQuantityCommand}"
+                                                    CommandParameter="{Binding .}"/>
+                                            <Label Text="{Binding Quantity}"
+                                                   TextColor="Black"
+                                                   HorizontalTextAlignment="Center"
+                                                   VerticalOptions="Center"
+                                                   HorizontalOptions="Center"
+                                                   WidthRequest="40"/>
+                                            <Button Text="+"
+                                                    BackgroundColor="LightBlue"
+                                                    WidthRequest="40"
+                                                    HeightRequest="30"
+                                                    HorizontalOptions="End"
+                                                    Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=IncreaseQuantityCommand}"
+                                                    CommandParameter="{Binding .}"/>
+                                        </HorizontalStackLayout>
+                                    </Grid>
+                                    <Grid Grid.Column="3">
+                                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Margin="5">
+                                            <HorizontalStackLayout HorizontalOptions="Start" Spacing="5">
+                                                <Label Text="{Binding Amount}"
+                                                       TextColor="Black"
+                                                       FontSize="16"
+                                                       FontAttributes="Bold"
+                                                       VerticalOptions="Center"/>
+                                                <Label Text="руб"
+                                                       TextColor="Gray"
+                                                       VerticalTextAlignment="Center"/>
+                                            </HorizontalStackLayout>
+                                            <HorizontalStackLayout>
+                                                <Label Text="{Binding TotalWeight}"
+                                                       TextColor="Gray"/>
+                                                <Label Text=" г"
+                                                       TextColor="Gray"/>
+                                            </HorizontalStackLayout>
+                                        </VerticalStackLayout>
+
+                                    </Grid>
+                                    <Grid Grid.Column="4">
+                                        <Button Text="X" Margin="5"
+                                                BackgroundColor="LightPink"
+                                                TextColor="Black"
+                                                FontSize="18"
+                                                Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=RemoveItemFromCurrentGiftCommand}"
+                                                CommandParameter="{Binding .}"/>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <VerticalStackLayout Grid.Row="2">
+                <Label Text="Итог"
+                       TextColor="Black"/>
+            </VerticalStackLayout>
+        </Grid>
+    </Grid>
+
+</ContentPage>
