@@ -111,36 +111,6 @@
         <Grid Grid.Column="1" BackgroundColor="{StaticResource LightGrey}"
               RowDefinitions="Auto, *, Auto" Padding="10">
             <VerticalStackLayout>
-                <Grid ColumnDefinitions="Auto, Auto"
-                      RowDefinitions="Auto, Auto"
-                      BackgroundColor="White">
-                    <Grid Grid.Row="0">
-                        <Grid Grid.Column="0">
-                            <Label Text="Название"
-                                   TextColor="Black"/>
-                        </Grid>
-                        <Grid Grid.Column="1">
-                            <Entry ClearButtonVisibility="WhileEditing"
-                                   Placeholder="Название подарка"
-                                   PlaceholderColor="Gray"
-                                   TextColor="Black"
-                                   MaxLength="30"/>
-                        </Grid>
-                    </Grid>
-                    <Grid Grid.Row="1">
-                        <Grid Grid.Column="0">
-                            <Label Text="Картинк"
-                                   TextColor="Black"/>
-                        </Grid>
-                        <Grid Grid.Column="1">
-                            <Entry ClearButtonVisibility="WhileEditing"
-                                   Placeholder="Карт"
-                                   PlaceholderColor="Gray"
-                                   TextColor="Black"
-                                   MaxLength="30"/>
-                        </Grid>
-                    </Grid>
-                </Grid>
                 <Label Grid.Row="0" Text="Состав набора"
                    FontSize="Title"
                    FontAttributes="Bold"
@@ -149,13 +119,13 @@
             </VerticalStackLayout>
             
             <CollectionView Grid.Row="1"
-                            ItemsSource="{Binding GiftItems}"
+                            ItemsSource="{Binding CurrentGiftItems}"
                             BackgroundColor="White">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical" ItemSpacing="1"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:GiftItemModel">
+                    <DataTemplate x:DataType="models:CurrentGiftItemModel">
                         <Grid>
                             <Border Padding="5"
                                     Margin="5"
@@ -249,8 +219,98 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
             <VerticalStackLayout Grid.Row="2">
-                <Label Text="Итог"
-                       TextColor="Black"/>
+                <Label/>
+                <Grid ColumnDefinitions="Auto, 0.1*" RowDefinitions="*, .10*, .5*, .10*, .10*, .10*, .10*, .10*, .5*, .20*"
+                      RowSpacing="5"
+                      ColumnSpacing="5"
+                      BackgroundColor="White"
+                      Padding="5">
+                    <Label Grid.Row="0"
+                           Grid.Column="0"
+                           Text="Стоимость набора"
+                           TextColor="Black"
+                           FontSize="18"
+                           FontAttributes="Bold"/>
+                    <HorizontalStackLayout Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Spacing="5">
+                        <Label Grid.Row="0"
+                               Grid.Column="1"
+                               Text="{Binding CurrentGift_TotalPrice}"
+                               TextColor="Black"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               HorizontalTextAlignment="End"/>
+                        <Label Text="руб."
+                               TextColor="Gray"/>
+                    </HorizontalStackLayout>
+                    <Label Grid.Row="1"
+                           Grid.Column="0"
+                           Text="Вес набора"
+                           TextColor="Black"/>
+                    <HorizontalStackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="End" Spacing="5">
+                        <Label Grid.Row="1"
+                           Grid.Column="1"
+                           Text="{Binding CurrentGift_TotalWeight}"
+                           TextColor="Black"
+                           HorizontalTextAlignment="End"/>
+                        <Label Text="г"
+                               TextColor="Gray"/>
+                    </HorizontalStackLayout>
+                    <Border Grid.Row="2" Grid.ColumnSpan="2"/>
+                    <Label Grid.Row="3"
+                           Grid.ColumnSpan="2"
+                           Text="Энергетическая ценность на 100г"
+                           TextColor="Black"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           HorizontalTextAlignment="Center"/>
+                    <Label Grid.Row="4"
+                           Grid.Column="0"
+                           Text="Калорийность, ккал"
+                           TextColor="Black"/>
+                    <Label Grid.Row="4"
+                           Grid.Column="1"
+                           Text="{Binding CurrentGift_NutritionalInfo.CaloriesPer100g}"
+                           TextColor="Black"
+                           HorizontalTextAlignment="End"/>
+                    <Label Grid.Row="5"
+                           Grid.Column="0"
+                           Text="Белки, г"
+                           TextColor="Black"/>
+                    <Label Grid.Row="5"
+                           Grid.Column="1"
+                           Text="{Binding CurrentGift_NutritionalInfo.ProteinsPer100g}"
+                           TextColor="Black"
+                           HorizontalTextAlignment="End"/>
+                    <Label Grid.Row="6"
+                           Grid.Column="0"
+                           Text="Жиры, г"
+                           TextColor="Black"/>
+                    <Label Grid.Row="6"
+                           Grid.Column="1"
+                           Text="{Binding CurrentGift_NutritionalInfo.FatsPer100g}"
+                           TextColor="Black"
+                           HorizontalTextAlignment="End"/>
+                    <Label Grid.Row="7"
+                           Grid.Column="0"
+                           Text="Углеводы, г"
+                           TextColor="Black"/>
+                    <Label Grid.Row="7"
+                           Grid.Column="1"
+                           Text="{Binding CurrentGift_NutritionalInfo.CarbohydratesPer100g}"
+                           TextColor="Black"
+                           HorizontalTextAlignment="End"/>
+                    <Border Grid.Row="8" Grid.ColumnSpan="2"/>
+                    <Button Grid.Row="9"
+                            Grid.Column="0"
+                            Text="Х"
+                            BackgroundColor="LightGray"
+                            Command="{Binding ClearCurrentGiftCommand}"
+                            ToolTipProperties.Text="Удалить все элементы набора"/>
+                    <Button Grid.Row="9"
+                            Grid.Column="1"
+                            Text="Сохранить"
+                            BackgroundColor="LightBlue"/>
+                </Grid>
             </VerticalStackLayout>
         </Grid>
     </Grid>

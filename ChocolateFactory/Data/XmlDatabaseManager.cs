@@ -17,10 +17,7 @@ namespace ChocolateFactory.Data
 
         public XmlDatabaseManager()
         {
-            // Получаем базовый путь к текущему домену приложения
             string currentPath = AppDomain.CurrentDomain.BaseDirectory;
-
-            // Поднимаемся на один уровень вверх, чтобы получить путь к корневой папке решения
             _basePath = Path.GetFullPath(Path.Combine(currentPath, "..\\"));
         }
 
@@ -55,7 +52,7 @@ namespace ChocolateFactory.Data
                 object deserializedObject = serializer.Deserialize(reader);
                 if (deserializedObject == null)
                 {
-                    return new List<T>(); // Возвращаем пустой список, если десериализация вернула null
+                    return new List<T>();
                 }
                 return (List<T>)deserializedObject;
             }
@@ -68,7 +65,6 @@ namespace ChocolateFactory.Data
 
             List<T> existingObjects = new List<T>();
 
-            // Десериализуем существующие данные, если файл существует
             if (File.Exists(fullPath))
             {
                 using (StreamReader reader = new StreamReader(fullPath))
@@ -77,10 +73,8 @@ namespace ChocolateFactory.Data
                 }
             }
 
-            // Добавляем новый объект в список
             existingObjects.Add(obj);
 
-            // Сериализуем обновленный список обратно в файл
             using (StreamWriter writer = new StreamWriter(fullPath))
             {
                 serializer.Serialize(writer, existingObjects);
@@ -94,7 +88,6 @@ namespace ChocolateFactory.Data
 
             List<T> existingObjects = new List<T>();
 
-            // Десериализуем существующие данные, если файл существует
             if (File.Exists(fullPath))
             {
                 using (StreamReader reader = new StreamReader(fullPath))
@@ -103,10 +96,8 @@ namespace ChocolateFactory.Data
                 }
             }
 
-            // Добавляем новые объекты в список
             existingObjects.AddRange(objects);
 
-            // Сериализуем обновленный список обратно в файл
             using (StreamWriter writer = new StreamWriter(fullPath))
             {
                 serializer.Serialize(writer, existingObjects);

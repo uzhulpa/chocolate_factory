@@ -11,7 +11,7 @@ namespace ChocolateFactory.ViewModels
 {
     public partial class GiftsViewModel : ObservableObject
     {
-        public void PlaceGift(List<GiftItemModel> giftItemsModels, string name, string imagePath)
+        public void PlaceGift(List<CurrentGiftItemModel> giftItemsModels, string name, string imagePath)
         {
             var giftItems = giftItemsModels.Select(x => new GiftItem
             {

@@ -51,17 +51,17 @@ namespace ChocolateFactory.Data
         {
             get
             {
-                return new NutritionalInfo(TotalProteins / (TotalWeight / 100), TotalFats / (TotalWeight / 100), TotalCarbohydrates / (TotalWeight / 100));
+                return new NutritionalInfo(TotalProteins / (TotalWeight / 100.0m), TotalFats / (TotalWeight / 100.0m), TotalCarbohydrates / (TotalWeight / 100.0m));
             }
         }
 
         public int TotalWeight => GiftItems.Sum(x => x.Weight);
         public decimal TotalPrice => GiftItems.Sum(x => x.Price);
 
-        public double TotalCalories => GiftItems.Sum(x => x.Calories);
-        public double TotalProteins => GiftItems.Sum(x => x.Proteins);
-        public double TotalFats => GiftItems.Sum(x => x.Fats);
-        public double TotalCarbohydrates => GiftItems.Sum(x => x.Carbohydrates);
+        public decimal TotalCalories => GiftItems.Sum(x => x.Calories);
+        public decimal TotalProteins => GiftItems.Sum(x => x.Proteins);
+        public decimal TotalFats => GiftItems.Sum(x => x.Fats);
+        public decimal TotalCarbohydrates => GiftItems.Sum(x => x.Carbohydrates);
 
         public Gift()
         {

@@ -17,7 +17,16 @@ namespace ChocolateFactory.ViewModels
         [ObservableProperty]
         private List<Item> _items = new List<Item>();
 
-        public ObservableCollection<GiftItemModel> GiftItems { get; set; } = new();
+        public ObservableCollection<CurrentGiftItemModel> CurrentGiftItems { get; set; } = new();
+
+        [ObservableProperty]
+        private decimal _currentGift_TotalPrice;
+
+        [ObservableProperty]
+        private int _currentGift_TotalWeight;
+
+        [ObservableProperty]
+        private NutritionalInfo _currentGift_NutritionalInfo = new();
 
         [ObservableProperty]
         private string _currentGiftName = string.Empty;
@@ -28,11 +37,19 @@ namespace ChocolateFactory.ViewModels
         public HomeViewModel(XmlDatabaseManager xmlDatabaseManager)
         {
             this._xmlDatabaseManager = xmlDatabaseManager;
+            CurrentGiftItems.CollectionChanged += CurrentGiftItems_CollectionChanged;
+        }
+
+        private void CurrentGiftItems_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            RecalculateCurrentGiftTotalPrice();
+            RecalculateCurrentGiftTotalWeight();
+            RecalculateCurrentGiftNutritionalInfo();
         }
 
         public void Initialize()
         {
-            if (_isInitialized) return; // Уже инициализирован
+            if (_isInitialized) return;
             IsLoading = true;
             Items = _xmlDatabaseManager.LoadItems();
             _isInitialized = true;
@@ -42,10 +59,10 @@ namespace ChocolateFactory.ViewModels
         [RelayCommand]
         private void AddToGift(Item item)
         {
-            var GiftItem = GiftItems.FirstOrDefault(x => x.ItemId == item.Id);
-            if (GiftItem == null) // Изделия ещё нет в наборе, добавить в набор
+            var GiftItem = CurrentGiftItems.FirstOrDefault(x => x.ItemId == item.Id);
+            if (GiftItem == null)
             {
-                GiftItem = new GiftItemModel
+                GiftItem = new CurrentGiftItemModel
                 {
                     ItemId = item.Id,
                     Name = item.Name,
@@ -55,28 +72,83 @@ namespace ChocolateFactory.ViewModels
                     Price = item.Price,
                     Quantity = 1
                 };
-                GiftItems.Add(GiftItem);
+                CurrentGiftItems.Add(GiftItem);
             }
-            else // Изделие уже есть в наборе, увеличить количество на 1
+            else
             {
                 GiftItem.Quantity++;
             }
+            RecalculateCurrentGiftTotalPrice();
+            RecalculateCurrentGiftTotalWeight();
+            RecalculateCurrentGiftNutritionalInfo();
         }
 
         [RelayCommand]
-        private void IncreaseQuantity(GiftItemModel giftItemModel) => giftItemModel.Quantity++;
+        private void IncreaseQuantity(CurrentGiftItemModel giftItemModel)
+        {
+            giftItemModel.Quantity++;
+            RecalculateCurrentGiftTotalPrice();
+            RecalculateCurrentGiftTotalWeight();
+            RecalculateCurrentGiftNutritionalInfo();
+        }
 
         [RelayCommand]
-        private void DecreaseQuantity(GiftItemModel giftItemModel)
+        private void DecreaseQuantity(CurrentGiftItemModel giftItemModel)
         {
             giftItemModel.Quantity--;
             if (giftItemModel.Quantity == 0)
             {
                 RemoveItemFromCurrentGift(giftItemModel);
             }
+            RecalculateCurrentGiftTotalPrice();
+            RecalculateCurrentGiftTotalWeight();
+            RecalculateCurrentGiftNutritionalInfo();
         }
 
         [RelayCommand]
-        private void RemoveItemFromCurrentGift(GiftItemModel giftItemModel) => GiftItems.Remove(giftItemModel);
+        private void RemoveItemFromCurrentGift(CurrentGiftItemModel giftItemModel)
+        {
+            CurrentGiftItems.Remove(giftItemModel);
+            RecalculateCurrentGiftTotalPrice();
+            RecalculateCurrentGiftTotalWeight();
+            RecalculateCurrentGiftNutritionalInfo();
+        }
+
+        [RelayCommand]
+        private async Task ClearCurrentGiftAsync()
+        {
+            if (await Shell.Current.DisplayAlert("Удалить собранный набор?", "Вы действительно хотите удалить все элементы набора?", "Да", "Нет"))
+            {
+                CurrentGiftItems.Clear();
+            }
+        }
+
+        private void RecalculateCurrentGiftTotalPrice()
+        {
+            CurrentGift_TotalPrice = CurrentGiftItems.Sum(x => x.Amount);
+        }
+
+        private void RecalculateCurrentGiftTotalWeight()
+        {
+            CurrentGift_TotalWeight = CurrentGiftItems.Sum(x => x.TotalWeight);
+        }
+
+        private void RecalculateCurrentGiftNutritionalInfo()
+        {
+
+            if (CurrentGift_TotalWeight == 0)
+            {
+                CurrentGift_NutritionalInfo = new NutritionalInfo(0.0m, 0.0m, 0.0m);
+                return;
+            }
+
+            decimal totalProteins = CurrentGiftItems.Sum(x => x.Proteins);
+            decimal totalFats = CurrentGiftItems.Sum(x => x.Fats);
+            decimal totalCarbohydrates = CurrentGiftItems.Sum(x => x.Carbohydrates);
+
+            CurrentGift_NutritionalInfo = new NutritionalInfo(decimal.Round(totalProteins / (CurrentGift_TotalWeight / 100.0m), 2),
+                decimal.Round(totalFats / (CurrentGift_TotalWeight / 100.0m), 2),
+                decimal.Round(totalCarbohydrates / (CurrentGift_TotalWeight / 100.0m), 2));
+        }
     }
 }

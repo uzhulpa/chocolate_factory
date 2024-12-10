@@ -9,19 +9,19 @@ namespace ChocolateFactory.Data
     [Serializable]
     public class NutritionalInfo
     {
-        private double _proteinsPer100g = 0;
-        private double _fatsPer100g = 0;
-        private double _carbohydratesPer100g = 0;
+        private decimal _proteinsPer100g = 0m;
+        private decimal _fatsPer100g = 0m;
+        private decimal _carbohydratesPer100g = 0m;
 
-        public double CaloriesPer100g
+        public decimal CaloriesPer100g
         {
             get
             {
-                return double.Round(this.ProteinsPer100g * 4.1 + this.FatsPer100g * 9.3 + this.CarbohydratesPer100g * 4.1,2);
+                return decimal.Round(this.ProteinsPer100g * 4.1m + this.FatsPer100g * 9.3m + this.CarbohydratesPer100g * 4.1m, 2);
             }
         }
 
-        public double ProteinsPer100g
+        public decimal ProteinsPer100g
         {
             get => _proteinsPer100g;
             set
@@ -33,7 +33,7 @@ namespace ChocolateFactory.Data
             }
         }
 
-        public double FatsPer100g
+        public decimal FatsPer100g
         {
             get => _fatsPer100g;
             set
@@ -45,7 +45,7 @@ namespace ChocolateFactory.Data
             }
         }
 
-        public double CarbohydratesPer100g
+        public decimal CarbohydratesPer100g
         {
             get => _carbohydratesPer100g;
             set
@@ -58,7 +58,7 @@ namespace ChocolateFactory.Data
         }
 
         public NutritionalInfo() { }
-        public NutritionalInfo(double proteinsPer100g, double fatsPer100g, double carbohydratesPer100g)
+        public NutritionalInfo(decimal proteinsPer100g, decimal fatsPer100g, decimal carbohydratesPer100g)
         {
             ProteinsPer100g = proteinsPer100g;
             FatsPer100g = fatsPer100g;

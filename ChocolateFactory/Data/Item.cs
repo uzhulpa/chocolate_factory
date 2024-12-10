@@ -71,32 +71,32 @@ namespace ChocolateFactory.Data
             }
         }
 
-        public double Calories
+        public decimal Calories
         {
             get
             {
-                return double.Round(NutritionalInfo.CaloriesPer100g * (Weight / 100.0), 2);
+                return decimal.Round(NutritionalInfo.CaloriesPer100g * (Weight / 100.0m), 2);
             }
         }
-        public double Proteins
+        public decimal Proteins
         {
             get
             {
-                return double.Round(NutritionalInfo.ProteinsPer100g * (Weight / 100.0), 2);
+                return decimal.Round(NutritionalInfo.ProteinsPer100g * (Weight / 100.0m), 2);
             }
         }
-        public double Fats
+        public decimal Fats
         {
             get
             {
-                return double.Round(NutritionalInfo.FatsPer100g * (Weight / 100.0), 2);
+                return decimal.Round(NutritionalInfo.FatsPer100g * (Weight / 100.0m), 2);
             }
         }
-        public double Carbohydrates
+        public decimal Carbohydrates
         {
             get
             {
-                return double.Round(NutritionalInfo.CarbohydratesPer100g * (Weight / 100.0), 2);
+                return decimal.Round(NutritionalInfo.CarbohydratesPer100g * (Weight / 100.0m), 2);
             }
         }
 
