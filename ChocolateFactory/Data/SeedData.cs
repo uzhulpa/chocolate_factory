@@ -36,15 +36,15 @@ namespace ChocolateFactory.Data
             List<Item> items = GetItems();
 
             Gift gift1 = new Gift("Gift Box 1", "gift_box_1.png");
-            gift1.AddItem(new GiftItemModel(items.First(x => x.Name == "Шоколадный батончик Twix")));
-            gift1.AddItem(new GiftItemModel(items.First(x => x.Name == "Карамель «Chupa Chups»")));
-            gift1.AddItem(new GiftItemModel(items.First(x => x.Name == "Шоколадный батончик «Mars» с нугой и карамелью")));
+            gift1.GiftItems.Add(new GiftItem(items.First(x => x.Name == "Шоколадный батончик Twix")));
+            gift1.GiftItems.Add(new GiftItem(items.First(x => x.Name == "Карамель «Chupa Chups»")));
+            gift1.GiftItems.Add(new GiftItem(items.First(x => x.Name == "Шоколадный батончик «Mars» с нугой и карамелью")));
 
             Gift gift2 = new Gift("Gift Box 2", "gift_box_2.png");
-            gift2.AddItem(new GiftItemModel(items.First(x => x.Name == "Taffy")));
-            gift2.AddItem(new GiftItemModel(items.First(x => x.Name == "Конфета «Коммунарка» Любимая Аленка")));
-            gift2.AddItem(new GiftItemModel(items.First(x => x.Name == "Конфета «Коммунарка» Батончик сливочный")));
-            gift2.AddItem(new GiftItemModel(items.First(x => x.Name == "Конфета «Коммунарка» Столичные")));
+            gift2.GiftItems.Add(new GiftItem(items.First(x => x.Name == "Taffy")));
+            gift2.GiftItems.Add(new GiftItem(items.First(x => x.Name == "Конфета «Коммунарка» Любимая Аленка")));
+            gift2.GiftItems.Add(new GiftItem(items.First(x => x.Name == "Конфета «Коммунарка» Батончик сливочный")));
+            gift2.GiftItems.Add(new GiftItem(items.First(x => x.Name == "Конфета «Коммунарка» Столичные")));
 
             return new List<Gift> { gift1, gift2 };
         }

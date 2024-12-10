@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ChocolateFactory.Models
 {
-    public partial class GiftItemModel : ObservableObject
+    public class GiftItem
     {
         public int ItemId { get; set; }
         public string Name { get; set; }
@@ -20,16 +20,15 @@ namespace ChocolateFactory.Models
 
         public decimal Price { get; set; }
 
-        [ObservableProperty, NotifyPropertyChangedFor(nameof(Amount), nameof(TotalWeight), nameof(Calories), nameof(Proteins), nameof(Fats), nameof(Carbohydrates))]
-        private int _quantity;
+        public int Quantity { get; set; }
 
-        public GiftItemModel()
+        public GiftItem()
         {
             Name = string.Empty;
             ImagePath = string.Empty;
         }
 
-        public GiftItemModel(Item item)
+        public GiftItem(Item item)
         {
             ItemId = item.Id;
             Name = item.Name;
@@ -37,12 +36,13 @@ namespace ChocolateFactory.Models
             Weight = item.Weight;
             Price = item.Price;
             NutritionalInfo = item.NutritionalInfo;
-            _quantity = 1;
+            Quantity = 1;
         }
 
-        public decimal Amount => decimal.Round(Price * _quantity, 2);
+        public decimal Amount => decimal.Round(Price * Quantity, 2);
 
-        public int TotalWeight => Weight * _quantity;
+        public int TotalWeight => Weight * Quantity;
+
         public double Calories
         {
             get

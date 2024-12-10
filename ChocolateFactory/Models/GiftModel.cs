@@ -10,7 +10,7 @@ namespace ChocolateFactory.Data
 
         private int _id;
         private string _name = string.Empty;
-        private List<Item> _items = new List<Item>();
+        private List<GiftItem> _giftItems = new List<GiftItem>();
         private string _imagePath = string.Empty;
 
         public int Id
@@ -31,12 +31,12 @@ namespace ChocolateFactory.Data
             }
         }
 
-        public List<Item> Items
+        public List<GiftItem> GiftItems
         {
-            get => _items;
+            get => _giftItems;
             set
             {
-                _items = value;
+                _giftItems = value;
             }
         }
 
@@ -56,13 +56,13 @@ namespace ChocolateFactory.Data
             }
         }
 
-        public int TotalWeight => Items.Sum(x => x.Weight);
-        public decimal TotalPrice => Items.Sum(x => x.Price);
+        public int TotalWeight => GiftItems.Sum(x => x.Weight);
+        public decimal TotalPrice => GiftItems.Sum(x => x.Price);
 
-        public double TotalCalories => Items.Sum(x => x.Calories);
-        public double TotalProteins => Items.Sum(x => x.Proteins);
-        public double TotalFats => Items.Sum(x => x.Fats);
-        public double TotalCarbohydrates => Items.Sum(x => x.Carbohydrates);
+        public double TotalCalories => GiftItems.Sum(x => x.Calories);
+        public double TotalProteins => GiftItems.Sum(x => x.Proteins);
+        public double TotalFats => GiftItems.Sum(x => x.Fats);
+        public double TotalCarbohydrates => GiftItems.Sum(x => x.Carbohydrates);
 
         public GiftModel()
         {
@@ -81,14 +81,14 @@ namespace ChocolateFactory.Data
             ImagePath = imagePath;
         }
 
-        public void AddItem(Item item)
+        public void AddItem(GiftItem giftItem)
         {
-            Items.Add(item);
+            GiftItems.Add(giftItem);
         }
 
-        public void RemoveItem(Item item)
+        public void RemoveItem(GiftItem giftItem)
         {
-            Items.Remove(item);
+            GiftItems.Remove(giftItem);
         }
     }
 }

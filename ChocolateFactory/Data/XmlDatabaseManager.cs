@@ -123,19 +123,6 @@ namespace ChocolateFactory.Data
             return DeserializeFromXml<Item>(_itemsFileName);
         }
 
-        public void PlaceGift(GiftModel model)
-        {
-            var gift = new Gift
-            {
-                Name = model.Name,
-                ImagePath = model.ImagePath
-            };
-            foreach (var item in model.Items)
-            {
-
-            }
-        }
-
         public void SaveGifts(List<Gift> gifts)
         {
             SerializeToXml(gifts, _giftsFileName);

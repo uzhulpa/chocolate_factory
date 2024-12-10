@@ -14,10 +14,10 @@ namespace ChocolateFactory.Data
         public static int Count=0;
 
         private int _id;
-        private String _name = "item name";
+        private string _name = "item name";
         private int _weight = 100;
         private decimal _price = 10;
-        private String _imagePath = "candy_bar.png";
+        private string _imagePath = "candy_bar.png";
         private NutritionalInfo _nutritionalInfo = new NutritionalInfo();
 
         public int Id
