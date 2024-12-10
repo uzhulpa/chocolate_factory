@@ -124,6 +124,20 @@ namespace ChocolateFactory.Data
             return DeserializeFromXml<Gift>(_giftsFileName);
         }
 
+        public void PlaceGift(GiftModel giftModel)
+        {
+            var gift = new Gift
+            {
+                Name = giftModel.Name,
+                ImagePath = giftModel.ImagePath
+            };
+            foreach (var giftItem in giftModel.GiftItems)
+            {
+                gift.GiftItems.Add(giftItem);
+            }
+            AppendToXml(gift, _giftsFileName);
+        }
+
         public void FillWithTestData()
         {
             string itemsFilePath = Path.Combine(_basePath, "items.xml");

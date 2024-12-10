@@ -74,21 +74,5 @@ namespace ChocolateFactory.Data
             Name = name;
             ImagePath = imagePath;
         }
-
-        public void SetGiftInfo(string name, string imagePath)
-        {
-            Name = name;
-            ImagePath = imagePath;
-        }
-
-        public void AddItem(GiftItem giftItem)
-        {
-            GiftItems.Add(giftItem);
-        }
-
-        public void RemoveItem(GiftItem giftItem)
-        {
-            GiftItems.Remove(giftItem);
-        }
     }
 }

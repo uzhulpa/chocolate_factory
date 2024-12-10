@@ -1,5 +1,6 @@
 ﻿using ChocolateFactory.Data;
 using ChocolateFactory.Models;
+using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
@@ -11,23 +12,30 @@ namespace ChocolateFactory.ViewModels
 {
     public partial class GiftsViewModel : ObservableObject
     {
-        public void PlaceGift(List<CurrentGiftItemModel> giftItemsModels, string name, string imagePath)
+        private readonly XmlDatabaseManager _xmlDatabaseManager;
+        public GiftsViewModel(XmlDatabaseManager xmlDatabaseManager)
         {
-            var giftItems = giftItemsModels.Select(x => new GiftItem
+            this._xmlDatabaseManager = xmlDatabaseManager;
+        }
+
+        public async Task PlaceGiftAsync(List<CurrentGiftItemModel> currentGiftItems)
+        {
+            var giftItems = currentGiftItems.Select(x => new GiftItem
             {
                 ItemId = x.ItemId,
-                Name = name,
-                ImagePath = imagePath,
-                Price = x.Price,
+                Name = x.Name,
+                ImagePath = x.ImagePath,
                 Weight = x.Weight,
-                NutritionalInfo = x.NutritionalInfo
-                
-            });
+                NutritionalInfo = x.NutritionalInfo,
+                Price = x.Price,
+                Quantity = x.Quantity
+            }).ToList();
             var giftModel = new GiftModel
             {
-                Name = name,
-                ImagePath = imagePath,
+                GiftItems = giftItems
             };
+
+            await Toast.Make("Набор успешно сохранён").Show();
         }
     }
 }

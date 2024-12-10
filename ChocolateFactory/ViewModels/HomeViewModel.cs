@@ -9,6 +9,8 @@ namespace ChocolateFactory.ViewModels
     public partial class HomeViewModel : ObservableObject
     {
         private readonly XmlDatabaseManager _xmlDatabaseManager;
+        private readonly GiftsViewModel _giftsViewModel;
+
         private bool _isInitialized=false;
 
         [ObservableProperty]
@@ -34,9 +36,10 @@ namespace ChocolateFactory.ViewModels
         [ObservableProperty]
         private string _currentGiftImagePath = string.Empty;
 
-        public HomeViewModel(XmlDatabaseManager xmlDatabaseManager)
+        public HomeViewModel(XmlDatabaseManager xmlDatabaseManager, GiftsViewModel giftsViewModel)
         {
             this._xmlDatabaseManager = xmlDatabaseManager;
+            this._giftsViewModel = giftsViewModel;
             CurrentGiftItems.CollectionChanged += CurrentGiftItems_CollectionChanged;
         }
 
@@ -149,6 +152,15 @@ namespace ChocolateFactory.ViewModels
             CurrentGift_NutritionalInfo = new NutritionalInfo(decimal.Round(totalProteins / (CurrentGift_TotalWeight / 100.0m), 2),
                 decimal.Round(totalFats / (CurrentGift_TotalWeight / 100.0m), 2),
                 decimal.Round(totalCarbohydrates / (CurrentGift_TotalWeight / 100.0m), 2));
+        }
+
+        [RelayCommand]
+        private async Task PlaceGiftAsync()
+        {
+            IsLoading = true;
+            await _giftsViewModel.PlaceGiftAsync(CurrentGiftItems.ToList());
+            IsLoading = false;
+            CurrentGiftItems.Clear();
         }
     }
 }
