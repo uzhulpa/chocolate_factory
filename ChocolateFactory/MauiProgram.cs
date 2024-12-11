@@ -26,7 +26,8 @@ namespace ChocolateFactory
             builder.Services.AddSingleton<XmlDatabaseManager>()
                 .AddSingleton<HomeViewModel>()
                 .AddSingleton<MainPage>()
-                .AddSingleton<GiftsViewModel>();
+                .AddSingleton<GiftsViewModel>()
+                .AddSingleton<GiftsPage>();
             return builder.Build();
         }
     }

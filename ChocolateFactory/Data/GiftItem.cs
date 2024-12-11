@@ -39,6 +39,11 @@ namespace ChocolateFactory.Models
             Quantity = 1;
         }
 
+        public GiftItem(Item item, int quantity) : this(item)
+        {
+            Quantity = quantity;
+        }
+
         public decimal Amount => decimal.Round(Price * Quantity, 2);
 
         public int TotalWeight => Weight * Quantity;

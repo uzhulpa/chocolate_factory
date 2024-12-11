@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChocolateFactory.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -122,6 +123,19 @@ namespace ChocolateFactory.Data
         public List<Gift> LoadGifts()
         {
             return DeserializeFromXml<Gift>(_giftsFileName);
+        }
+
+        public List<GiftItem> GetGiftItems(int giftId)
+        {
+            List<Gift> gifts = LoadGifts();
+            Gift? gift = gifts.FirstOrDefault(g => g.Id == giftId);
+
+            if (gift != null)
+            {
+                return gift.GiftItems;
+            }
+
+            return new List<GiftItem>();
         }
 
         public void PlaceGift(GiftModel giftModel)

@@ -51,6 +51,7 @@ namespace ChocolateFactory.Data
         {
             get
             {
+                if (TotalCalories == 0) return new NutritionalInfo();
                 return new NutritionalInfo(TotalProteins / (TotalWeight / 100.0m), TotalFats / (TotalWeight / 100.0m), TotalCarbohydrates / (TotalWeight / 100.0m));
             }
         }
