@@ -82,19 +82,21 @@
                                             Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=AddToGiftCommand}"
                                             CommandParameter="{Binding .}"
                                             BackgroundColor="LightBlue"/>
-                                    <!-- Кнопка -->
-                                    <!--<ImageButton Grid.Row="2" Source="plus.png"
-                                                 HeightRequest="20"
-                                                 WidthRequest="20"
-                                                 Aspect="AspectFit"
-                                                 HorizontalOptions="Center"
-                                                 VerticalOptions="End"
-                                                 Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=AddToGiftCommand}"
-                                                 CommandParameter="{Binding .}"/>-->
                                 </Grid>
                             </Border>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
+                    <CollectionView.EmptyView>
+                        <Grid Padding="15">
+                            <VerticalStackLayout>
+                                <Label Text="Набор пуст"
+                                       TextColor="Gray"
+                                       FontSize="20"/>
+                                <Label Text="Выберите элемент из секции слева, чтобы добавить его в набор."
+                                       TextColor="Gray"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </CollectionView.EmptyView>
                 </CollectionView>
                 <BoxView IsVisible="{Binding IsLoading}"
                          HorizontalOptions="Fill"

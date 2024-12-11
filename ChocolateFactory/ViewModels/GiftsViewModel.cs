@@ -1,8 +1,10 @@
 ﻿using ChocolateFactory.Data;
+using ChocolateFactory.Messages;
 using ChocolateFactory.Models;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -54,6 +56,8 @@ namespace ChocolateFactory.ViewModels
             };
 
             await Toast.Make("Набор успешно сохранён").Show();
+
+            _xmlDatabaseManager.PlaceGift(giftModel);
         }
 
         public void Initialize()
@@ -65,6 +69,12 @@ namespace ChocolateFactory.ViewModels
             {
                 Gifts.Add(gift);
             }
+
+            WeakReferenceMessenger.Default.Register<GiftCreatedMessage>(this, (r, m) =>
+            {
+                Gifts.Add(m.NewGift);
+            });
+
             _isInitialized = true;
             IsLoading = false;
         }
@@ -72,7 +82,7 @@ namespace ChocolateFactory.ViewModels
         [RelayCommand]
         private void SelectGift(Gift? gift)
         {
-            if (gift == null || gift.Id == 0)
+            if (gift == null)
             {
                 SelectedGiftItems = [];
                 return;

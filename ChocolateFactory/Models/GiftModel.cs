@@ -6,14 +6,12 @@ namespace ChocolateFactory.Data
     [Serializable]
     public partial class GiftModel : ObservableObject
     {
-        private static int Count = 0;
-
-        private int _id;
+        private Guid _id;
         private string _name = string.Empty;
         private List<GiftItem> _giftItems = new List<GiftItem>();
         private string _imagePath = string.Empty;
 
-        public int Id
+        public Guid Id
         {
             get => _id;
             set
@@ -66,7 +64,7 @@ namespace ChocolateFactory.Data
 
         public GiftModel()
         {
-            Id = ++Count;
+            _id = Guid.NewGuid();
         }
 
         public GiftModel(string name, string imagePath) : this()

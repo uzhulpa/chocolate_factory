@@ -53,7 +53,7 @@
                                 <Grid RowDefinitions="4, Auto, 4, Auto" ColumnDefinitions="*, *, *, *, *">
                                     <Label Grid.Column="0"
                                            Grid.Row="1"
-                                           Text="{Binding Id}"
+                                           Text="{Binding stringId}"
                                            TextColor="Black"
                                            Padding="5, 0, 0, 0"
                                            VerticalTextAlignment="Center"/>
@@ -73,7 +73,7 @@
                                     </HorizontalStackLayout>
                                     <Label Grid.Column="3"
                                            Grid.Row="1"
-                                           Text="{Binding GiftItems.Count}"
+                                           Text="{Binding NumberOfElements}"
                                            TextColor="Black"
                                            VerticalTextAlignment="Center"/>
                                     <Button Grid.Column="4"

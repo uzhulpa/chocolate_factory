@@ -1,4 +1,6 @@
-﻿using ChocolateFactory.Models;
+﻿using ChocolateFactory.Messages;
+using ChocolateFactory.Models;
+using CommunityToolkit.Mvvm.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -125,7 +127,7 @@ namespace ChocolateFactory.Data
             return DeserializeFromXml<Gift>(_giftsFileName);
         }
 
-        public List<GiftItem> GetGiftItems(int giftId)
+        public List<GiftItem> GetGiftItems(Guid giftId)
         {
             List<Gift> gifts = LoadGifts();
             Gift? gift = gifts.FirstOrDefault(g => g.Id == giftId);
@@ -140,16 +142,15 @@ namespace ChocolateFactory.Data
 
         public void PlaceGift(GiftModel giftModel)
         {
-            var gift = new Gift
-            {
-                Name = giftModel.Name,
-                ImagePath = giftModel.ImagePath
-            };
+            var gift = new Gift(giftModel.Name, giftModel.ImagePath);
             foreach (var giftItem in giftModel.GiftItems)
             {
                 gift.GiftItems.Add(giftItem);
             }
+
             AppendToXml(gift, _giftsFileName);
+
+            WeakReferenceMessenger.Default.Send(new GiftCreatedMessage(gift));
         }
 
         public void FillWithTestData()
