@@ -2,11 +2,120 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ChocolateFactory.Pages.ManageMenuItemPage"
+             xmlns:controls="clr-namespace:ChocolateFactory.Controls"
+             xmlns:vm="clr-namespace:ChocolateFactory.ViewModels"
+             xmlns:data="clr-namespace:ChocolateFactory.Data"
+             xmlns:models="clr-namespace:ChocolateFactory.Models"
+             Shell.NavBarIsVisible="False"
              Title="ManageMenuItemPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+
+    <Grid ColumnDefinitions=".60*, .40*"
+      BackgroundColor="White">
+        <Grid Grid.Column="0"
+          RowDefinitions="Auto, *"
+          Padding="10,10">
+            <Label Grid.Row="0"
+               Text="Кондитерские изделия"
+               TextColor="Black"
+               BackgroundColor="{StaticResource White}"
+               FontSize="Title"
+               Padding="5,10"
+               FontAttributes="Bold"/>
+            <Grid Grid.Row="1">
+                <!--    CollectionView для Items    -->
+                <CollectionView x:Name="ItemsCollectionView"
+                            ItemsSource="{Binding Items}"
+                            BackgroundColor="White">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="3" HorizontalItemSpacing="5" VerticalItemSpacing="5"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="data:Item">
+                            <Border StrokeShape="RoundRectangle 10"
+                                Margin="10"
+                                Padding="10"
+                                StrokeThickness="0.5"
+                                Stroke="LightGray"
+                                >
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Верхние элементы -->
+                                    <VerticalStackLayout Grid.Row="0" Spacing="5">
+                                        <!-- Картинка -->
+                                        <Image Source="{Binding ImagePath}"
+                                           HeightRequest="130"
+                                           WidthRequest="130"
+                                           BackgroundColor="White"
+                                           Aspect="AspectFit"
+                                           HorizontalOptions="Center"/>
+
+                                        <!-- Цена и вес -->
+                                        <FlexLayout JustifyContent="SpaceBetween">
+                                            <HorizontalStackLayout HorizontalOptions="Start" Spacing="5">
+                                                <Label Text="{Binding Price}"
+                                                   TextColor="Black"
+                                                   FontSize="18"
+                                                   FontAttributes="Bold"/>
+                                                <Label Text="руб./шт"
+                                                   TextColor="Gray"
+                                                   VerticalTextAlignment="Center"/>
+                                            </HorizontalStackLayout>
+                                            <Label Text="{Binding Weight, StringFormat='{0} г'}"
+                                               TextColor="Gray"
+                                               VerticalOptions="Center"/>
+                                        </FlexLayout>
+
+                                        <!-- Название -->
+                                        <Label Text="{Binding Name}"
+                                           TextColor="Black"
+                                           LineBreakMode="WordWrap"
+                                           MaxLines="3"
+                                           VerticalOptions="Start"/>
+                                        <Label FontSize="Micro"/>
+                                    </VerticalStackLayout>
+                                    <Button Grid.Row="2"
+                                            HeightRequest="35"
+                                            Text="Изменить"
+                                            TextColor="Black"
+                                            Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:ManageMenuItemsViewModel}}, Path=EditItemCommand}"
+                                            CommandParameter="{Binding .}"
+                                            BackgroundColor="LightBlue"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <BoxView IsVisible="{Binding IsLoading}"
+                     HorizontalOptions="Fill"
+                     VerticalOptions="Fill"
+                     Opacity="0.5"/>
+                <ActivityIndicator IsRunning="{Binding IsLoading}"
+                               HeightRequest="25"
+                               WidthRequest="25"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               Color="DarkBlue"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="1" BackgroundColor="{StaticResource LightGrey}"
+          RowDefinitions="Auto, *" Padding="10">
+            <VerticalStackLayout>
+                <Label Grid.Row="0" Text="Редактирование"
+               FontSize="Title"
+               FontAttributes="Bold"
+               TextColor="Black"
+               Margin="5"/>
+            </VerticalStackLayout>
+            <Grid Grid.Row="1"
+                  Padding="10"
+                  BackgroundColor="White">
+                <controls:SaveItemFormControl Item="{Binding Item}" OnCancel="SaveItemFormControl_OnCancel"/>
+            </Grid>
+        </Grid>
+    </Grid>
+
 </ContentPage>

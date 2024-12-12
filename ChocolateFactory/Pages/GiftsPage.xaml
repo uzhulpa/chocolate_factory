@@ -79,6 +79,7 @@
                                     <Button Grid.Column="4"
                                             Grid.Row="1"
                                             Text="Состав"
+                                            TextColor="Black"
                                             FontSize="14"
                                             BackgroundColor="LightBlue"
                                             HeightRequest="30"
@@ -113,13 +114,14 @@
             <Grid Grid.Row="0" ColumnDefinitions="*, Auto">
                 <Grid RowDefinitions="Auto" ColumnDefinitions="0.8*, Auto">
                     <Label Grid.Row="0" Grid.Column="0"
-                               Text="Выбранный набор"
+                               Text="Состав набора"
                                FontSize="Title"
                                FontAttributes="Bold"
                                TextColor="Black"
                                Margin="5"/>
                     <Button Grid.Row="0" Grid.Column="1"
                             Text="X"
+                            TextColor="Black"
                             BackgroundColor="LightGray"
                             Command="{Binding SelectGiftCommand}"/>
                 </Grid>

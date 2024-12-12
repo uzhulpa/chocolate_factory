@@ -27,7 +27,9 @@ namespace ChocolateFactory
                 .AddSingleton<HomeViewModel>()
                 .AddSingleton<MainPage>()
                 .AddSingleton<GiftsViewModel>()
-                .AddSingleton<GiftsPage>();
+                .AddSingleton<GiftsPage>()
+                .AddTransient<ManageMenuItemsViewModel>()
+                .AddTransient<ManageMenuItemPage>();
             return builder.Build();
         }
     }

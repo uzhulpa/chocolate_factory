@@ -54,8 +54,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiImage Remove="Resources\Images\add-image.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Resources\Fonts\Nunito-Bold.ttf" />
 	  <None Remove="Resources\Fonts\Nunito-Regular.ttf" />
+	  <None Remove="Resources\Images\add-image.png" />
+	  <None Remove="Resources\Images\add_image.png" />
 	  <None Remove="Resources\Images\candy_bar.png" />
 	  <None Remove="Resources\Images\choco_nut.png" />
 	  <None Remove="Resources\Images\chupa_chups.png" />
@@ -84,10 +90,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Controls\" />
-	</ItemGroup>
-
-	<ItemGroup>
+	  <MauiXaml Update="Controls\SaveItemFormControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\GiftsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -11,7 +11,7 @@ namespace ChocolateFactory.ViewModels
         private readonly XmlDatabaseManager _xmlDatabaseManager;
         private readonly GiftsViewModel _giftsViewModel;
 
-        private bool _isInitialized=false;
+        private bool _isInitialized = false;
 
         [ObservableProperty]
         private bool _isLoading;

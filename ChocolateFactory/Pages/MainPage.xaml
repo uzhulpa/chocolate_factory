@@ -79,6 +79,7 @@
                                     <Button Grid.Row="2"
                                             HeightRequest="35"
                                             Text="Добавить"
+                                            TextColor="Black"
                                             Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=AddToGiftCommand}"
                                             CommandParameter="{Binding .}"
                                             BackgroundColor="LightBlue"/>
@@ -86,17 +87,6 @@
                             </Border>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
-                    <CollectionView.EmptyView>
-                        <Grid Padding="15">
-                            <VerticalStackLayout>
-                                <Label Text="Набор пуст"
-                                       TextColor="Gray"
-                                       FontSize="20"/>
-                                <Label Text="Выберите элемент из секции слева, чтобы добавить его в набор."
-                                       TextColor="Gray"/>
-                            </VerticalStackLayout>
-                        </Grid>
-                    </CollectionView.EmptyView>
                 </CollectionView>
                 <BoxView IsVisible="{Binding IsLoading}"
                          HorizontalOptions="Fill"
@@ -162,6 +152,7 @@
                                     <Grid Grid.Column="2">
                                         <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Margin="5">
                                             <Button Text="-"
+                                                    TextColor="Black"
                                                     BackgroundColor="LightBlue"
                                                     WidthRequest="40"
                                                     HeightRequest="30"
@@ -175,6 +166,7 @@
                                                    HorizontalOptions="Center"
                                                    WidthRequest="40"/>
                                             <Button Text="+"
+                                                    TextColor="Black"
                                                     BackgroundColor="LightBlue"
                                                     WidthRequest="40"
                                                     HeightRequest="30"
@@ -217,6 +209,14 @@
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Grid Padding="15">
+                        <VerticalStackLayout>
+                            <Label Text="Выберите элемент из секции слева, чтобы добавить его в набор."
+                   TextColor="Gray"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </CollectionView.EmptyView>
             </CollectionView>
             <VerticalStackLayout Grid.Row="2">
                 <Label/>
@@ -303,12 +303,14 @@
                     <Button Grid.Row="9"
                             Grid.Column="0"
                             Text="Х"
+                            TextColor="Black"
                             BackgroundColor="LightGray"
                             Command="{Binding ClearCurrentGiftCommand}"
                             ToolTipProperties.Text="Удалить все элементы набора"/>
                     <Button Grid.Row="9"
                             Grid.Column="1"
                             Text="Сохранить"
+                            TextColor="Black"
                             BackgroundColor="LightBlue"
                             Command="{Binding PlaceGiftCommand}"/>
                 </Grid>
