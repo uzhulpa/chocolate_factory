@@ -1,4 +1,5 @@
-﻿using ChocolateFactory.Messages;
+﻿using ChocolateFactory.Data;
+using ChocolateFactory.Messages;
 using ChocolateFactory.Models;
 using CommunityToolkit.Mvvm.Messaging;
 using System;
@@ -8,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace ChocolateFactory.Data
+namespace ChocolateFactory.Repository
 {
     public class XmlDatabaseManager
     {
@@ -173,8 +174,8 @@ namespace ChocolateFactory.Data
             {
                 // обновление существующего элемента
                 var items = LoadItems();
-                var oldItem = items.Find(x => x.Id ==itemModel.Id);
-                
+                var oldItem = items.Find(x => x.Id == itemModel.Id);
+
                 if (oldItem == null) return;
 
                 int index = items.IndexOf(oldItem);

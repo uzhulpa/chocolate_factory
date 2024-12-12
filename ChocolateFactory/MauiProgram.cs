@@ -1,5 +1,5 @@
-﻿using ChocolateFactory.Data;
-using ChocolateFactory.Pages;
+﻿using ChocolateFactory.Pages;
+using ChocolateFactory.Repository;
 using ChocolateFactory.ViewModels;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;

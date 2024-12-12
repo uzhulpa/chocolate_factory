@@ -14,7 +14,7 @@
         Title="Home"
         ContentTemplate="{DataTemplate pages:MainPage}"
         Icon="candy_bar.png"
-        Route="MainPage" />
+        Route="MainPage"/>
     
     <ShellContent
         Title="Gifts"

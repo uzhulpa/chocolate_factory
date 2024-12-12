@@ -1,6 +1,7 @@
 ﻿using ChocolateFactory.Data;
 using ChocolateFactory.Messages;
 using ChocolateFactory.Models;
+using ChocolateFactory.Repository;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;

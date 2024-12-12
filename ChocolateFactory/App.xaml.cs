@@ -1,4 +1,4 @@
-﻿using ChocolateFactory.Data;
+﻿using ChocolateFactory.Repository;
 
 namespace ChocolateFactory
 {

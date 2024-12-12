@@ -1,6 +1,7 @@
 ﻿using ChocolateFactory.Data;
 using ChocolateFactory.Messages;
 using ChocolateFactory.Models;
+using ChocolateFactory.Repository;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;

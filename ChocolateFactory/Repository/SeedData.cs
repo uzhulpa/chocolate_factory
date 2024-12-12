@@ -1,11 +1,12 @@
-﻿using ChocolateFactory.Models;
+﻿using ChocolateFactory.Data;
+using ChocolateFactory.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChocolateFactory.Data
+namespace ChocolateFactory.Repository
 {
     public class SeedData
     {
