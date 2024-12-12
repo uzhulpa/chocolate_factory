@@ -1,12 +1,14 @@
 ﻿using ChocolateFactory.Data;
+using ChocolateFactory.Messages;
 using ChocolateFactory.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 
 namespace ChocolateFactory.ViewModels
 {
-    public partial class HomeViewModel : ObservableObject
+    public partial class HomeViewModel : ObservableObject, IRecipient<ItemChangedMessage>
     {
         private readonly XmlDatabaseManager _xmlDatabaseManager;
         private readonly GiftsViewModel _giftsViewModel;
@@ -39,8 +41,10 @@ namespace ChocolateFactory.ViewModels
         public HomeViewModel(XmlDatabaseManager xmlDatabaseManager, GiftsViewModel giftsViewModel)
         {
             this._xmlDatabaseManager = xmlDatabaseManager;
-            this._giftsViewModel = giftsViewModel;
+            this._giftsViewModel = giftsViewModel;  
             CurrentGiftItems.CollectionChanged += CurrentGiftItems_CollectionChanged;
+
+            WeakReferenceMessenger.Default.Register<ItemChangedMessage>(this);
         }
 
         private void CurrentGiftItems_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -161,6 +165,29 @@ namespace ChocolateFactory.ViewModels
             await _giftsViewModel.PlaceGiftAsync(CurrentGiftItems.ToList());
             IsLoading = false;
             CurrentGiftItems.Clear();
+        }
+
+        public void Receive(ItemChangedMessage message)
+        {
+            Items = _xmlDatabaseManager.LoadItems();
+
+            var itemModel = message.Value;
+
+            var currentGiftItem = CurrentGiftItems.FirstOrDefault(x => x.ItemId == itemModel.Id);
+
+            if (currentGiftItem == null) return;
+
+            currentGiftItem.Price = itemModel.Price;
+            currentGiftItem.Name = itemModel.Name;
+            currentGiftItem.ImagePath = itemModel.ImagePath;
+            currentGiftItem.Weight = itemModel.Weight;
+            currentGiftItem.NutritionalInfo = itemModel.NutritionalInfo;
+            currentGiftItem.Quantity = currentGiftItem.Quantity;
+
+            // триггерит отслеживаемую коллекцию
+            var currentGiftItemIndex = CurrentGiftItems.IndexOf(currentGiftItem);
+            CurrentGiftItems[currentGiftItemIndex] = currentGiftItem;
+
         }
     }
 }

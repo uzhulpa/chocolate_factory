@@ -1,8 +1,10 @@
 ﻿using ChocolateFactory.Data;
+using ChocolateFactory.Messages;
 using ChocolateFactory.Models;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace ChocolateFactory.ViewModels
 {
@@ -69,10 +71,19 @@ namespace ChocolateFactory.ViewModels
 
                 await Toast.Make("Элемент успешно изменён").Show();
 
+                HandleItemChanged(itemModel);
+
+                WeakReferenceMessenger.Default.Send(new ItemChangedMessage(itemModel));
+
                 Cancel();
 
                 IsLoading = false;
             }
+        }
+
+        private void HandleItemChanged(ItemModel itemModel)
+        {
+            Items = _xmlDatabaseManager.LoadItems();
         }
     }
 }
