@@ -1,5 +1,6 @@
 ﻿using ChocolateFactory.Data;
 using ChocolateFactory.Models;
+using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -54,6 +55,24 @@ namespace ChocolateFactory.ViewModels
         private void Cancel()
         {
             Item = new();
+        }
+
+        [RelayCommand]
+        private async Task SaveItemAsync(ItemModel itemModel)
+        {
+
+            if (await Shell.Current.DisplayAlert("Сохранить изменения?", "Вы действительно хотите сохранить все внесённые изменения?", "Да", "Нет"))
+            {
+                IsLoading = true;
+
+                _xmlDatabaseManager.SaveItem(itemModel);
+
+                await Toast.Make("Элемент успешно изменён").Show();
+
+                Cancel();
+
+                IsLoading = false;
+            }
         }
     }
 }

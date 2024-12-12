@@ -113,7 +113,9 @@
             <Grid Grid.Row="1"
                   Padding="10"
                   BackgroundColor="White">
-                <controls:SaveItemFormControl Item="{Binding Item}" OnCancel="SaveItemFormControl_OnCancel"/>
+                <controls:SaveItemFormControl Item="{Binding Item}"
+                                              OnCancel="SaveItemFormControl_OnCancel"
+                                              OnSaveItem="SaveItemFormControl_OnSaveItem"/>
             </Grid>
         </Grid>
     </Grid>

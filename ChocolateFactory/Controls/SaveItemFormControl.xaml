@@ -24,7 +24,8 @@
                         HorizontalOptions="Center"
                         BackgroundColor="LightBlue"
                         MinimumHeightRequest="30"
-                        Margin="0,5,0,0"/>
+                        Margin="0,5,0,0"
+                        Clicked="PickImageButton_Clicked"/>
             </VerticalStackLayout>
             <VerticalStackLayout>
                 <Label Text="Стоимость, руб."
@@ -77,7 +78,8 @@
                         Command="{Binding CancelCommand}"/>
                 <Button Grid.Column="1"
                         Text="Сохранить"
-                        BackgroundColor="LightBlue"/>
+                        BackgroundColor="LightBlue"
+                        Command="{Binding SaveItemCommand}"/>
             </Grid>
         </VerticalStackLayout>
     </ScrollView>

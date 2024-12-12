@@ -153,6 +153,42 @@ namespace ChocolateFactory.Data
             WeakReferenceMessenger.Default.Send(new GiftCreatedMessage(gift));
         }
 
+        public void SaveItem(ItemModel itemModel)
+        {
+            if (itemModel.Id == 0)
+            {
+                // создание нового элемента
+                Item newItem = new()
+                {
+                    Name = itemModel.Name,
+                    Price = itemModel.Price,
+                    Weight = itemModel.Weight,
+                    ImagePath = itemModel.ImagePath,
+                    NutritionalInfo = itemModel.NutritionalInfo,
+                };
+
+                AppendToXml(newItem, _itemsFileName);
+            }
+            else
+            {
+                // обновление существующего элемента
+                var items = LoadItems();
+                var oldItem = items.Find(x => x.Id ==itemModel.Id);
+                
+                if (oldItem == null) return;
+
+                int index = items.IndexOf(oldItem);
+
+                items[index].Name = itemModel.Name;
+                items[index].Price = itemModel.Price;
+                items[index].Weight = itemModel.Weight;
+                items[index].ImagePath = itemModel.ImagePath;
+                items[index].NutritionalInfo = itemModel.NutritionalInfo;
+
+                SaveItems(items);
+            }
+        }
+
         public void FillWithTestData()
         {
             string itemsFilePath = Path.Combine(_basePath, "items.xml");
