@@ -21,6 +21,7 @@
                        HeightRequest="35"
                        Aspect="AspectFit"/>
                 <Button Text="Выбрать"
+                        TextColor="Black"
                         HorizontalOptions="Center"
                         BackgroundColor="LightBlue"
                         MinimumHeightRequest="30"
@@ -72,12 +73,14 @@
             <Grid ColumnDefinitions="0.4*, 0.6*">
                 <Button Grid.Column="0"
                         Text="Отменить"
+                        TextColor="Black"
                         BackgroundColor="White"
                         BorderWidth="0.5"
                         BorderColor="LightGray"
                         Command="{Binding CancelCommand}"/>
                 <Button Grid.Column="1"
                         Text="Сохранить"
+                        TextColor="Black"
                         BackgroundColor="LightBlue"
                         Command="{Binding SaveItemCommand}"/>
             </Grid>
