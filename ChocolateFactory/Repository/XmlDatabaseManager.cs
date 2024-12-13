@@ -85,6 +85,29 @@ namespace ChocolateFactory.Repository
             }
         }
 
+        public void AppendItemToXml(Item obj, string filePath)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Item>));
+            string fullPath = Path.Combine(_basePath, filePath);
+
+            List<Item> existingObjects = new List<Item>();
+
+            if (File.Exists(fullPath))
+            {
+                using (StreamReader reader = new StreamReader(fullPath))
+                {
+                    existingObjects = (List<Item>)serializer.Deserialize(reader);
+                }
+            }
+
+            existingObjects.Add(obj);
+
+            using (StreamWriter writer = new StreamWriter(fullPath))
+            {
+                serializer.Serialize(writer, existingObjects);
+            }
+        }
+
         public void AppendListToXml<T>(List<T> objects, string filePath)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
@@ -159,7 +182,7 @@ namespace ChocolateFactory.Repository
             if (itemModel.Id == 0)
             {
                 // создание нового элемента
-                Item newItem = new()
+                Candy newItem = new()
                 {
                     Name = itemModel.Name,
                     Price = itemModel.Price,
@@ -168,7 +191,7 @@ namespace ChocolateFactory.Repository
                     NutritionalInfo = itemModel.NutritionalInfo,
                 };
 
-                AppendToXml(newItem, _itemsFileName);
+                AppendItemToXml(newItem, _itemsFileName);
             }
             else
             {

@@ -122,7 +122,24 @@ public partial class SaveItemFormControl : ContentView
             return;
         }
 
-		if (Item.NutritionalInfo.CaloriesPer100g == 0)
+        if (Item.NutritionalInfo.ProteinsPer100g < 0)
+        {
+            await ErrorAlertAsync("Ќеверно заполнено поле пищевой ценности: белки на 100 г.");
+            return;
+        }
+
+        if (Item.NutritionalInfo.ProteinsPer100g < 0)
+        {
+            await ErrorAlertAsync("Ќеверно заполнено поле пищевой ценности: жиры на 100 г.");
+            return;
+        }
+        if (Item.NutritionalInfo.ProteinsPer100g < 0)
+        {
+            await ErrorAlertAsync("Ќеверно заполнено поле пищевой ценности: углеводы на 100 г.");
+            return;
+        }
+
+        if (Item.NutritionalInfo.CaloriesPer100g == 0)
 		{
 			await ErrorAlertAsync("ќтсутствует информаци€ о пищевой ценности продукта.");
 			return;

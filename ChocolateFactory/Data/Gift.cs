@@ -4,7 +4,7 @@ using ChocolateFactory.Models;
 namespace ChocolateFactory.Data
 {
     [Serializable]
-    public partial class Gift
+    public class Gift
     {
         private Guid _id;
         private string _name = string.Empty;

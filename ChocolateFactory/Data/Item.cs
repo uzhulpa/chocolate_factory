@@ -8,17 +8,35 @@ using System.Xml.Serialization;
 
 namespace ChocolateFactory.Data
 {
+    [XmlInclude(typeof(Candy))]
     [Serializable]
-    public class Item
+    public abstract class Item
     {
         public static int Count=0;
 
         private int _id;
-        private string _name = "item name";
-        private int _weight = 100;
-        private decimal _price = 10;
-        private string _imagePath = "candy_bar.png";
+        private string _name;
+        private int _weight;
+        private decimal _price;
+        private string _imagePath;
         private NutritionalInfo _nutritionalInfo = new NutritionalInfo();
+
+        public Item()
+        {
+            Id = ++Count;
+            _name = "item name";
+            _weight = 100;
+            _price = 10;
+            _imagePath = "candy_bar_png";
+        }
+        public Item(string name, int weight, decimal price, string imagePath, NutritionalInfo nutritionalInfo) : this()
+        {
+            Name = name;
+            Weight = weight;
+            Price = price;
+            ImagePath = imagePath;
+            NutritionalInfo = nutritionalInfo;
+        }
 
         public int Id
         {
@@ -98,19 +116,6 @@ namespace ChocolateFactory.Data
             {
                 return decimal.Round(NutritionalInfo.CarbohydratesPer100g * (Weight / 100.0m), 2);
             }
-        }
-
-        public Item()
-        {
-            Id = ++Count;
-        }
-        public Item(string name, int weight, decimal price, string imagePath, NutritionalInfo nutritionalInfo) : this()
-        {
-            Name = name;
-            Weight = weight;
-            Price = price;
-            ImagePath = imagePath;
-            NutritionalInfo = nutritionalInfo;
         }
     }
 }
