@@ -10,7 +10,7 @@ namespace ChocolateFactory.Data
 {
     [XmlInclude(typeof(Candy))]
     [Serializable]
-    public abstract class Item
+    public abstract class Item :IComparable<Item>
     {
         public static int Count=0;
 
@@ -116,6 +116,11 @@ namespace ChocolateFactory.Data
             {
                 return decimal.Round(NutritionalInfo.CarbohydratesPer100g * (Weight / 100.0m), 2);
             }
+        }
+
+        public int CompareTo(Item? obj)
+        {
+            return (this.Weight-obj.Weight);
         }
     }
 }

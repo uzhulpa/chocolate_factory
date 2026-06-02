@@ -223,13 +223,13 @@ namespace ChocolateFactory.Repository
 
             if (!itemsFileExistsAndNotEmpty)
             {
-                var items = SeedData.GetItems();
+                var items = TestDataLoader.GetItems();
                 SaveItems(items);
             }
 
             if (!giftsFileExistsAndNotEmpty)
             {
-                var gifts = SeedData.GetGifts();
+                var gifts = TestDataLoader.GetGifts();
                 SaveGifts(gifts);
             }
         }

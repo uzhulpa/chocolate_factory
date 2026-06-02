@@ -33,12 +33,6 @@ namespace ChocolateFactory.ViewModels
         [ObservableProperty]
         private NutritionalInfo _currentGift_NutritionalInfo = new();
 
-        [ObservableProperty]
-        private string _currentGiftName = string.Empty;
-
-        [ObservableProperty]
-        private string _currentGiftImagePath = string.Empty;
-
         public HomeViewModel(XmlDatabaseManager xmlDatabaseManager, GiftsViewModel giftsViewModel)
         {
             this._xmlDatabaseManager = xmlDatabaseManager;
@@ -60,6 +54,7 @@ namespace ChocolateFactory.ViewModels
             if (_isInitialized) return;
             IsLoading = true;
             Items = _xmlDatabaseManager.LoadItems();
+            Items.Sort();
             _isInitialized = true;
             IsLoading = false;
         }

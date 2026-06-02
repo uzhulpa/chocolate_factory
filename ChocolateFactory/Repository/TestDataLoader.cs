@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ChocolateFactory.Repository
 {
-    public class SeedData
+    public class TestDataLoader
     {
         public static List<Item> GetItems()
         {
